@@ -11,6 +11,12 @@ class Brand(models.Model):
 
     title = models.CharField(null=False, blank=False, max_length=200, verbose_name='Title')
 
+    def __str__(self):
+        return self.title
+
+    def __unicode__(self):
+        return self.title
+
 
 class Product(models.Model):
     class Meta:
@@ -27,6 +33,9 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, null=True, blank=True, on_delete=models.CASCADE, verbose_name='Brand')
     description = models.TextField(null=True, blank=True, verbose_name='Description')
 
+    def __str__(self):
+        return self.title
+
 
 class Category(models.Model):
     class Meta:
@@ -35,6 +44,9 @@ class Category(models.Model):
         verbose_name_plural = 'Categories'
 
     title = models.CharField(null=False, blank=False, max_length=200, verbose_name='Title')
+
+    def __str__(self):
+        return self.title
 
 
 class ProductCategory(models.Model):
