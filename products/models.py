@@ -44,6 +44,7 @@ class Category(models.Model):
         verbose_name_plural = 'Categories'
 
     title = models.CharField(null=False, blank=False, max_length=200, verbose_name='Title')
+    is_active = models.BooleanField(null=False, blank=False, default=True, verbose_name='Активна')
 
     def __str__(self):
         return self.title

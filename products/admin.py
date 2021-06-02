@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import *
 # from products.models import Product, ProductReview, ProductCategory, Brand, Category
 
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['title', 'price', 'old_price', 'quantity', 'brand']
@@ -9,7 +10,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['title']
+    list_display = ['title', 'is_active']
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
