@@ -30,7 +30,7 @@ class Product(models.Model):
     old_price = models.DecimalField(null=True, max_digits=9, decimal_places=2, blank=True, verbose_name='Old price')
     quantity = models.IntegerField(default=1, null=False, blank=False, verbose_name='Quantity')
     photo = models.ImageField(upload_to='images', null=True, blank=True, verbose_name='Photo')
-    brand = models.ForeignKey(Brand, null=True, blank=True, on_delete=models.CASCADE, verbose_name='Brand')
+    brand = models.ForeignKey(Brand, related_name='products', null=True, blank=True, on_delete=models.CASCADE, verbose_name='Brand')
     description = models.TextField(null=True, blank=True, verbose_name='Description')
 
     def __str__(self):
@@ -66,7 +66,7 @@ class ProductReview(models.Model):
         verbose_name = 'Review'
         verbose_name_plural = 'Reviews'
 
-    product = models.ForeignKey(Product, null=False, blank=False, on_delete=models.CASCADE, verbose_name='Product')
+    product = models.ForeignKey(Product, related_name='reviews', null=False, blank=False, on_delete=models.CASCADE, verbose_name='Product')
     review = models.TextField(null=False, blank=False, verbose_name='Review')
 
 

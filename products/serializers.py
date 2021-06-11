@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Category, Product, ProductReview
+from .models import Category, Product, ProductReview, Brand
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,14 +25,29 @@ class ProductReviewSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+
+class BrandField(serializers.RelatedField):
+    def to_representation(self, value):
+        return {"id": value.id, "title": value.title}
+
+
 class ProductRetrieveSerializer(serializers.ModelSerializer):
     reviews = ProductReviewSerializer(many=True, read_only=True)
+    brand = BrandField(many=False, read_only=True)
     class Meta:
         model = Product
         fields = ['id', 'title', 'price', 'old_price', 'quantity', 'photo', 'brand', 'description', 'reviews']
 
 
 class ProductPreviewSerializer(serializers.ModelSerializer):
+    brand = BrandField(many=False, read_only=True)
     class Meta:
         model = Product
-        fields = ['id', 'title', 'price', 'old_price', 'photo']
+        fields = ['id', 'title', 'price', 'old_price', 'photo', 'brand']
+
+
+class BrandRetrieveWithProductSerializer(serializers.ModelSerializer):
+    products = ProductPreviewSerializer(many=True, read_only=True)
+    class Meta:
+        model = Brand
+        fields = ['id', 'title', 'products']

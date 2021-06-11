@@ -18,6 +18,7 @@ class Order(models.Model):
     time_delivery = models.DateTimeField(null=True, blank=True, verbose_name='Time delivery')
 
 
+
 class OrderProduct(models.Model):
     class Meta:
         db_table = 'orders_products'

@@ -13,6 +13,7 @@ class Customer(models.Model):
     phone = models.BigIntegerField(null=True, blank=True, verbose_name='Phone')
     email = models.CharField(max_length=200, null=True, blank=True, verbose_name='Email')
     time_created = models.DateTimeField(auto_now_add=True, verbose_name='Time created')
+    token = models.CharField(max_length=200, null=False, blank=False, editable=False, verbose_name='Token')
 
 
 class CustomerAddress(models.Model):

@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from rest_framework import generics, status
+from rest_framework import generics, status, filters
 from rest_framework.response import Response
 from .serializers import *
 from .models import Category, ProductCategory
 from .paginations import ProductPagination
+from .filters import *
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class CategoryList(generics.ListAPIView):
@@ -36,9 +38,16 @@ class ProductList(generics.ListAPIView):
     serializer_class = ProductPreviewSerializer
     queryset = Product.objects.all()
     pagination_class = ProductPagination
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_class = ProductFilter
+    # filterset_fields = ['brand', 'price']
+    search_fields = ['title', 'brand__title']
+    ordering_fields = ['title', 'price']
 
 
-
+class BrandRetrieve(generics.RetrieveAPIView):
+    serializer_class = BrandRetrieveWithProductSerializer
+    queryset = Brand.objects.all()
 
 
 
