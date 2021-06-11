@@ -126,6 +126,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+if DEBUG == False:
+    STATICFILES_DIR = '/home/pasv/onlinestore/pasv-online-store-backend/static/'
+    STATIC_ROOT = '/home/pasv/onlinestore/pasv-online-store-backend/static/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
