@@ -49,7 +49,9 @@ class BrandRetrieve(generics.RetrieveAPIView):
     serializer_class = BrandRetrieveWithProductSerializer
     queryset = Brand.objects.all()
 
-
+class BrandList(generics.ListAPIView):
+    serializer_class = BrandListSerializer
+    queryset = Brand.objects.all()
 
 
 
