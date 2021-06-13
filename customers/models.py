@@ -15,6 +15,12 @@ class Customer(models.Model):
     time_created = models.DateTimeField(auto_now_add=True, verbose_name='Time created')
     token = models.CharField(max_length=200, null=False, blank=False, editable=False, verbose_name='Token')
 
+    def __str__(self):
+        if self.first_name:
+            return self.first_name
+        else:
+            return self.token
+
 
 class CustomerAddress(models.Model):
     class Meta:

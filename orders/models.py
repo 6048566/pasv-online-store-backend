@@ -17,6 +17,12 @@ class Order(models.Model):
     time_checkout = models.DateTimeField(null=True, blank=True, verbose_name='Time checkout')
     time_delivery = models.DateTimeField(null=True, blank=True, verbose_name='Time delivery')
 
+    def __str__(self):
+        if self.customer.first_name:
+            return self.customer.first_name
+        else:
+            return self.customer.token
+
 
 
 class OrderProduct(models.Model):
