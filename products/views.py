@@ -27,6 +27,12 @@ class ProductRetrieve(generics.RetrieveAPIView):
 
 class ProductListFromCategory(generics.ListAPIView):
     serializer_class = ProductPreviewSerializer
+    pagination_class = ProductPagination
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_class = ProductFilter
+    # filterset_fields = ['brand', 'price']
+    search_fields = ['title', 'brand__title']
+    ordering_fields = ['title', 'price']
 
     def get_queryset(self):
         product_ids = ProductCategory.objects.filter(category_id=self.kwargs['category_id']).values('product_id')
