@@ -32,7 +32,11 @@ class BrandField(serializers.RelatedField):
 
 class PhotoField(serializers.RelatedField):
     def to_representation(self, value):
-        return value.url
+        try:
+            return value.url
+        except:
+            return '/media/images/no_photo.jpg'
+
 
 class ProductRetrieveSerializer(serializers.ModelSerializer):
     reviews = ProductReviewSerializer(many=True, read_only=True)
