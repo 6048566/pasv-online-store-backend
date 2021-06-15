@@ -64,6 +64,6 @@ class CartList(generics.ListAPIView):
 
     def get_queryset(self):
         try:
-            return OrderProduct.objects.filter(order__customer__token=self.request.data['token'])
+            return OrderProduct.objects.filter(order__customer__token=self.kwargs['customer_token'])
         except BaseException:
             return None
