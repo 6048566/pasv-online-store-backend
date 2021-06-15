@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Category, Product, ProductReview, Brand
-
+from django.conf import settings
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,9 +33,9 @@ class BrandField(serializers.RelatedField):
 class PhotoField(serializers.RelatedField):
     def to_representation(self, value):
         try:
-            return value.url
+            return settings.BASE_DOMAIN + value.url
         except:
-            return '/media/images/no_photo.jpg'
+            return settings.BASE_DOMAIN + '/media/images/no_photo.jpg'
 
 
 class ProductRetrieveSerializer(serializers.ModelSerializer):

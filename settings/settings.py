@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-y#-6#em1-v^o92c&j+^h1*x^)2iztth%b#@%rt90ct4q7)e=zu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -130,9 +130,11 @@ STATIC_URL = '/static/'
 if DEBUG == False:
     STATICFILES_DIR = '/home/pasv/onlinestore/pasv-online-store-backend/static/'
     STATIC_ROOT = '/home/pasv/onlinestore/pasv-online-store-backend/static/'
+    BASE_DOMAIN = 'http://api.onlinestore.pasv.xxiweb.ru'
 else:
     STATICFILES_DIR = '/static/'
     STATIC_ROOT = '/static/'
+    BASE_DOMAIN = 'http://127.0.0.1:8000'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -147,3 +149,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+
