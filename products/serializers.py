@@ -30,10 +30,14 @@ class BrandField(serializers.RelatedField):
     def to_representation(self, value):
         return {"id": value.id, "title": value.title}
 
+class PhotoField(serializers.RelatedField):
+    def to_representation(self, value):
+        return value.url
 
 class ProductRetrieveSerializer(serializers.ModelSerializer):
     reviews = ProductReviewSerializer(many=True, read_only=True)
     brand = BrandField(many=False, read_only=True)
+    photo = PhotoField(read_only=True)
     class Meta:
         model = Product
         fields = ['id', 'title', 'price', 'old_price', 'quantity', 'photo', 'brand', 'description', 'reviews']
@@ -41,6 +45,7 @@ class ProductRetrieveSerializer(serializers.ModelSerializer):
 
 class ProductPreviewSerializer(serializers.ModelSerializer):
     brand = BrandField(many=False, read_only=True)
+    photo = PhotoField(read_only=True)
     class Meta:
         model = Product
         fields = ['id', 'title', 'price', 'old_price', 'photo', 'brand']
