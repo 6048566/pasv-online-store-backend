@@ -17,7 +17,7 @@ class Customer(models.Model):
 
     def __str__(self):
         if self.first_name:
-            return self.first_name
+            return self.first_name + ' ' + self.last_name
         else:
             return self.token
 

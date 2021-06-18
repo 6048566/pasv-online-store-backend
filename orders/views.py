@@ -20,7 +20,7 @@ def update_cart(request):
             request_json = json.loads(request.body)
             customer = Customer.objects.get(token=request_json['token'])
             product = Product.objects.get(pk=request_json['product_id'])
-            orders = Order.objects.filter(customer=customer)
+            orders = Order.objects.filter(customer=customer, is_ordered=False).order_by('-id')
             if orders.count() == 0:
                 order = Order.objects.create(customer=customer)
             else:
@@ -64,6 +64,48 @@ class CartList(generics.ListAPIView):
 
     def get_queryset(self):
         try:
-            return OrderProduct.objects.filter(order__customer__token=self.kwargs['customer_token'])
+            return OrderProduct.objects.filter(
+                order__customer__token=self.kwargs['customer_token'],
+                order__is_ordered=False
+            )
         except BaseException:
             return None
+
+
+class OrderFinalize(generics.UpdateAPIView):
+    serializer_class = OrderSerializer
+    queryset = Order
+
+    def update(self, request, *args, **kwargs):
+        try:
+            request_json = request.data
+            customer = Customer.objects.get(token=request_json['token'])
+            instance = Order.objects.filter(customer=customer, is_ordered=False).order_by('-id')[0]
+            # instance = self.get_object()
+            serializer = self.get_serializer(instance, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            self.perform_update(serializer)
+            customer.first_name = request_json['first_name']
+            customer.last_name = request_json['last_name']
+            customer.email = request_json['email']
+
+
+            address = CustomerAddress.objects.create(
+                customer = customer,
+                country = request_json['country'],
+                city = request_json['city'],
+                post_code = request_json['post_code'],
+                address = request_json['address'],
+            )
+            instance.customer_shipping_address = address
+            instance.is_ordered = True
+            instance.time_checkout = datetime.now()
+
+            customer.save()
+            instance.save()
+
+            return Response(serializer.data)
+        except BaseException as err:
+            return Response({"error": str(err)}, status=status.HTTP_400_BAD_REQUEST)
+
+
