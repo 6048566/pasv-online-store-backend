@@ -144,9 +144,9 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://127.0.0.1:3000"
-# ]
-
-CORS_ALLOW_ALL_ORIGINS = True
-
+if DEBUG == False:
+    CORS_ALLOWED_ORIGINS = [
+        "http://127.0.0.1:3000"
+    ]
+else:
+    CORS_ALLOW_ALL_ORIGINS = True
