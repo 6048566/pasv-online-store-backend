@@ -19,9 +19,17 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/product/', include('products.urls')),
     path('api/customer/', include('customers.urls')),
-    path('api/order/', include('orders.urls'))
+    path('api/order/', include('orders.urls')),
+    # path('api/auth/', include('djoser.urls')),
+    path('api/jwt/auth/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
