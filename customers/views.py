@@ -1,4 +1,6 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import HttpResponse
+from django.shortcuts import get_object_or_404
+
 from rest_framework import generics
 import uuid
 import json
@@ -47,3 +49,22 @@ class MyOrders(generics.ListAPIView):
     permission_classes = [IsAuthenticated, ]
     def get_queryset(self):
         return Order.objects.filter(customer__user=self.request.user)
+
+
+# def get_auth_customer(request):
+#     if request.user.is_authenticated == True:
+#         try:
+#             customer = Customer.objects.get(user=request.user)
+#             return HttpResponse(json.dumps(customer))
+#         except BaseException:
+#             return HttpResponse()
+
+
+class GetAuthCustomer(generics.RetrieveAPIView):
+    serializer_class = CustomerSerializer
+    authentication_classes = [JWTAuthentication, ]
+    permission_classes = [IsAuthenticated, ]
+
+    def get_object(self):
+        customer = get_object_or_404(Customer, user=self.request.user)
+        return customer

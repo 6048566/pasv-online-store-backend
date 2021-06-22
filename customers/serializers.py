@@ -53,3 +53,7 @@ class MyOrdersSerializer(serializers.ModelSerializer):
         model = Order
         fields = ['id', 'is_ordered', 'time_created', 'time_checkout', 'time_delivery', 'products']
 
+class CustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = '__all__'
