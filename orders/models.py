@@ -32,7 +32,7 @@ class OrderProduct(models.Model):
         verbose_name = 'Order product'
         verbose_name_plural = 'Orders products'
 
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='Order')
+    order = models.ForeignKey(Order, related_name='products', on_delete=models.CASCADE, verbose_name='Order')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Product')
     price = models.DecimalField(default=0, max_digits=9, decimal_places=2, null=False, blank=False, verbose_name='Price')
     quantity = models.IntegerField(default=1, null=False, blank=False, verbose_name='Quantity')

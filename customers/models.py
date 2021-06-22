@@ -1,6 +1,7 @@
 from django.db import models
 
-# Create your models here.
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class Customer(models.Model):
     class Meta:
@@ -14,6 +15,7 @@ class Customer(models.Model):
     email = models.CharField(max_length=200, null=True, blank=True, verbose_name='Email')
     time_created = models.DateTimeField(auto_now_add=True, verbose_name='Time created')
     token = models.CharField(max_length=200, null=False, blank=False, editable=False, verbose_name='Token')
+    user = models.ForeignKey(User, null=True, blank=False, verbose_name='User', on_delete=models.SET_NULL)
 
     def __str__(self):
         if self.first_name:
