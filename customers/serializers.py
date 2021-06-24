@@ -24,6 +24,12 @@ class UserSerializer(serializers.ModelSerializer):
             try:
                 customer = Customer.objects.get(token=self.context['request'].data['token'])
                 customer.user = user
+                if len(customer.first_name) == 0:
+                    customer.first_name = first_name=validated_data['first_name']
+                if len(customer.first_name) == 0:
+                    customer.last_name = first_name=validated_data['last_name']
+                if len(customer.email) == 0:
+                    customer.first_name = first_name=validated_data['email']
                 customer.save()
             except BaseException as e:
                 print(e)

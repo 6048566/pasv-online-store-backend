@@ -4,5 +4,5 @@ from .models import *
 
 @admin.register(Customer)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['token', 'last_name', 'first_name', 'phone', 'email', 'time_created']
+    list_display = ['token', 'last_name', 'first_name', 'user', 'phone', 'email', 'time_created']
     search_fields = ['last_name', 'first_name']
