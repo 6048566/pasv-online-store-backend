@@ -12,3 +12,7 @@ urlpatterns = [
     path('brands/get/<int:pk>/', BrandRetrieve.as_view()),
     path('brands/all/', BrandList.as_view()),
 ]
+
+# вывод товаров с фильтрами
+# корзина
+# тест с ордерами
